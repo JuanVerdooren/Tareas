@@ -1,0 +1,79 @@
+/* Tarjeta principal */
+.task-card {
+  border-left: 6px solid #2f2f2f; 
+  border-radius: 16px;
+  background-color: #fff;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.task-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título de la tarea */
+.task-title {
+  font-weight: 600;
+  color: #212529;
+}
+
+/* Descripción de la tarea */
+.task-desc {
+  color: #495057;
+  display: inline-block;
+}
+
+/* Botones de íconos (Eliminar) */
+.icon-btn {
+  padding: 6px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.icon-btn:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Botón Editar */
+.icon-btn1 {
+  color: #101010;
+  padding: 6px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.icon-btn1:hover {
+  background-color: #0d6efd;
+  color: white;
+}
+
+/* Animación de aparición */
+.scale-in {
+  animation: scaleIn 0.3s ease-in-out;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

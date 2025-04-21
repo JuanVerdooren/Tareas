@@ -1,0 +1,29 @@
+{
+  "name": "juanky-practica",
+  "version": "1.0.0",
+  "description": "Proyecto Full Stack Juanky (React + Node + MongoDB)",
+  "main": "server.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix frontend",
+    "build": "cd frontend && npm run build"
+  },
+  "keywords": [],
+  "author": "Margarita Olaya",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bootstrap-icons": "^1.11.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.8.6",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "nodemon": "^3.0.2"
+  }
+}

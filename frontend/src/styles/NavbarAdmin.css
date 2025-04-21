@@ -1,0 +1,32 @@
+/* NavbarAdmin.css */
+
+.navbar-admin {
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .navbar-admin .username {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  .navbar-admin .btn {
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .navbar-admin .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+  }
+  
+  .navbar-admin .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
+  
+
+  
