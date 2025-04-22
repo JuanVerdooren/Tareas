@@ -5,22 +5,19 @@ import { useAuth } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import "../styles/AdminUsers.css";
 
-
 const AdminUsers = () => {
   const { token } = useAuth();
   const [usuarios, setUsuarios] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
         const res = await fetch("http://localhost:5001/auth/users1", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         if (!res.ok) throw new Error("Error al obtener usuarios");
-
         const data = await res.json();
         setUsuarios(data);
       } catch (err) {
@@ -49,13 +46,16 @@ const AdminUsers = () => {
 
     if (confirm.isConfirmed) {
       try {
-        const response = await fetch(`http://localhost:5001/auth/users1/${userId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `http://localhost:5001/auth/users1/${userId}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (!response.ok) throw new Error("Error al eliminar usuario");
 
@@ -90,12 +90,12 @@ const AdminUsers = () => {
         </div>
       `,
       showCancelButton: true,
-      confirmButtonText: 'Guardar',
-      cancelButtonText: 'Cancelar',
+      confirmButtonText: "Guardar",
+      cancelButtonText: "Cancelar",
       customClass: {
-        popup: 'modal-popup-custom',
-        confirmButton: 'modal-btn modal-btn-confirm',
-        cancelButton: 'modal-btn modal-btn-cancel',
+        popup: "modal-popup-custom",
+        confirmButton: "modal-btn modal-btn-confirm",
+        cancelButton: "modal-btn modal-btn-cancel",
       },
       buttonsStyling: false,
       focusConfirm: false,
@@ -103,27 +103,31 @@ const AdminUsers = () => {
         const username = document.getElementById("swal-input1").value.trim();
         const email = document.getElementById("swal-input2").value.trim();
         const password = document.getElementById("swal-input3").value;
-    
+
         if (!username || !email) {
-          Swal.showValidationMessage("Nombre de usuario y correo son obligatorios");
+          Swal.showValidationMessage(
+            "Nombre de usuario y correo son obligatorios"
+          );
           return false;
         }
-    
+
         return { username, email, password };
       },
     });
-    
 
     if (formValues) {
       try {
-        const response = await fetch(`http://localhost:5001/auth/users1/${userId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(formValues),
-        });
+        const response = await fetch(
+          `http://localhost:5001/auth/users1/${userId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(formValues),
+          }
+        );
 
         if (!response.ok) throw new Error("Error al actualizar usuario");
 
@@ -144,30 +148,58 @@ const AdminUsers = () => {
     }
   };
 
+  const usuariosFiltrados = usuarios.filter(
+    (u) =>
+      u.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      u.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container">
       <NavbarAdmin />
       <div className="container my-5">
         <h2 className="text-center fw-bold mb-4">Usuarios Registrados</h2>
+
+        <div className="search-container">
+          <input
+            type="text"
+            className="form-control search-input"
+            placeholder="Buscar por nombre o correo..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {searchTerm && (
+            <span className="search-clear" onClick={() => setSearchTerm("")}>
+              &times;
+            </span>
+          )}
+        </div>
+
         <div className="row">
-          {usuarios.map((u) => (
-            <div key={u._id} className="col-md-4 mb-4">
-              <div className="card p-3 shadow-sm">
-                <div className="d-flex justify-content-between align-items-center">
+          {usuariosFiltrados.map((u) => (
+            <div key={u._id} className="col-12 col-sm-6 col-md-4 mb-4">
+              <div className="card p-3 shadow-sm h-100 d-flex flex-column justify-content-between">
+                <div className="d-flex align-items-center flex-wrap">
                   <FaUser size={50} />
-                  <div className="d-flex flex-column align-items-start ms-3">
+                  <div className="ms-3">
                     <strong>{u.username}</strong>
-                    <span>{u.email}</span>
-                    <span>Rol: {u.role}</span>
+                    <div>{u.email}</div>
+                    <div>Rol: {u.role}</div>
                   </div>
-                  <div className="d-flex gap-2">
-                    <button className="btn btn-sm" onClick={() => handleEdit(u._id)}>
-                      <FaEdit /> Editar
-                    </button>
-                    <button className="btn1 btn btn-sm" onClick={() => handleDelete(u._id)}>
-                      <FaTrash /> Eliminar
-                    </button>
-                  </div>
+                </div>
+                <div className="d-flex gap-2 mt-3 flex-wrap">
+                  <button
+                    className="btn btn-sm"
+                    onClick={() => handleEdit(u._id)}
+                  >
+                    <FaEdit /> Editar
+                  </button>
+                  <button
+                    className="btn1 btn btn-sm"
+                    onClick={() => handleDelete(u._id)}
+                  >
+                    <FaTrash /> Eliminar
+                  </button>
                 </div>
               </div>
             </div>

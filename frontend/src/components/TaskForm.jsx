@@ -188,7 +188,7 @@ const TaskForm = ({ handleSubmit, formData, setFormData, editingTaskId }) => {
           onChange={(e) =>
             setFormData({ ...formData, usuario: e.target.value })
           }
-          required
+          
         >
           <option value="">Seleccionar usuario</option>
           {usuarios.length > 0 ? (

@@ -46,10 +46,11 @@ const NavbarAdmin = () => {
       <div className="container-fluid">
         <div className="d-flex align-items-center text-white gap-2">
           <FaUserCircle size={24} />
-          <strong className="username">Hola, {username}</strong>
+
+          <strong className="username"> Hola, {username}</strong>
         </div>
 
-        {/* Botón hamburguesa */}
+    
         <button
           className="navbar-toggler text-white border-white"
           type="button"

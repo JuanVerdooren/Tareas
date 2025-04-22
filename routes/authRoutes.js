@@ -19,31 +19,6 @@ router.get("/user", authMiddleware, async (req, res) => {
     }
 });
 
-router.get("/all-users-tasks", authMiddleware, async (req, res) => {
-    try {
-        if (req.user.role !== "admin") {
-            return res.status(403).json({ mensaje: "Acceso denegado. Solo los administradores pueden ver esta información." });
-        }
-
-        const usuariosConTareas = await User.find()
-            .select("username email role")
-            .lean();
-
-        const tareas = await Task.find().populate("usuario", "username email").lean();
-
-        // Asignar tareas a cada usuario
-        const resultado = usuariosConTareas.map((usuario) => {
-            return {
-                ...usuario,
-                tareas: tareas.filter(t => t.usuario && t.usuario._id.toString() === usuario._id.toString())
-            };
-        });
-
-        res.json(resultado);
-    } catch (error) {
-        res.status(500).json({ mensaje: "Error al obtener los datos", error });
-    }
-});
 
 // Registro de usuario (solo admin puede registrar)
 router.post("/register", authMiddleware, async (req, res) => {
@@ -111,7 +86,7 @@ router.post("/login", async (req, res) => {
 });
 
 
-// Ruta para obtener usuarios
+// Ruta para obtener usuarios(Taskform)
 
 router.get('/users', authMiddleware, async (req, res) => {
     try {
@@ -129,13 +104,12 @@ router.get('/users', authMiddleware, async (req, res) => {
     }
   });
   
-  
 
 
-// Obtener todos los usuarios (incluye la contraseña)
+// Ruta Obtener todos los usuarios
 router.get("/users1", async (req, res) => {
     try {
-      const usuarios = await User.find(); // Cambié Usuario por User
+      const usuarios = await User.find(); 
       res.json(usuarios);
     } catch (err) {
       console.error("Error al obtener usuarios", err);
@@ -143,6 +117,7 @@ router.get("/users1", async (req, res) => {
     }
   });
 
+  // Ruta Eliminar usuarios
   router.delete('/users1/:id', async (req, res) => {
     try {
       const userId = req.params.id;
@@ -161,6 +136,8 @@ router.get("/users1", async (req, res) => {
     }
   });
   
+
+  // Ruta Editar usuarios
   router.put('/users1/:id', async (req, res) => {
     try {
       const userId = req.params.id;

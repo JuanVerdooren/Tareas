@@ -9,108 +9,119 @@
 h2 {
   font-size: 2rem;
   color: #333;
-  margin-bottom: 20px; /* Añadido margen para separarlo de los elementos */
+  margin-bottom: 20px;
 }
 
-/* Estilo para las tarjetas de usuario */
+/* Tarjeta de usuario */
 .card {
   border: 1px solid #ddd;
   border-radius: 10px;
-  padding: 20px; /* Aumento el padding para que los elementos no estén tan juntos */
+  padding: 20px;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  margin-bottom: 20px; /* Añadido margen para separación entre tarjetas */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-/* Efecto hover en la tarjeta */
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para los íconos y la información del usuario */
-.card .d-flex {
+/* Contenido dentro de la tarjeta */
+.card .user-info {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Añadido para que los elementos se ajusten mejor en pantallas pequeñas */
+  flex-wrap: wrap;
 }
 
-.card .d-flex .ms-3 {
+.card .user-info .ms-3 {
   margin-left: 10px;
 }
 
-.card .d-flex .d-flex {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px; /* Espacio entre los elementos dentro del contenedor flex */
-}
-
-.card .d-flex .d-flex span {
-  font-size: 0.875rem;
-  color: #6c757d;
-}
-
-.card .d-flex .d-flex strong {
+.card .user-info strong {
   font-size: 1.125rem;
   font-weight: bold;
   color: #333;
 }
 
-/* Estilo para los botones de editar y eliminar */
-.card .d-flex .gap-2 button {
-  padding: 6px 12px; /* Ajusté los botones a un tamaño más compacto */
-  font-size: 0.85rem; /* Texto más compacto */
-  border-radius: 10px;
+.card .user-info span,
+.card .user-info div {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+/* Botones */
+.card .gap-2 {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.card .gap-2 button {
+  padding: 6px 12px;
+  font-size: 0.85rem;
   font-weight: 600;
+  border-radius: 10px;
   transition: all 0.3s ease;
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.05),
     -3px -3px 8px rgba(255, 255, 255, 0.6);
-  min-width: 100%; /* Los botones ahora tienen un tamaño más natural */
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
+  width: 100%;
+  border: none;
 }
 
-/* Botón Editar */
+/* Estilo específico para cada botón */
+.card .gap-2 .btn {
+  background-color: #e2e6ea;
+  color: #000;
+}
 
-.card .d-flex .gap-2 .btn:hover {
-  background: #257edc;
-  color: white;
+.card .gap-2 .btn:hover {
+  background: #3489e3;
+  color: rgb(255, 255, 255);
   box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
 }
 
-/* Botón Eliminar */
+.card .gap-2 .btn1 {
+  background-color: #e2e6ea;
+  color: #000;
+}
 
-.card .d-flex .gap-2 .btn1:hover {
+.card .gap-2 .btn1:hover {
   background: #e84454;
   color: white;
   box-shadow: 0 6px 15px rgba(220, 53, 69, 0.3);
 }
 
-/* Responsividad */
-@media (max-width: 900px) {
-  .card {
-    margin-bottom: 15px;
-    align-items: center;
-  }
-
-  .card .d-flex {
+/* RESPONSIVIDAD */
+@media (max-width: 768px) {
+  .card .user-info {
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
   }
 
-  /* Ajuste de botones para pantallas pequeñas */
-  .card .d-flex .gap-2 button {
-    width: 100%; /* Asegura que los botones no se sobrepongan */
-    margin-bottom: 10px; /* Separación entre botones */
+  .card .gap-2 {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .card .gap-2 button {
+    width: 100%;
   }
 }
+
+
 
 /* ---------------MODAL------------------ */
 
 .modal-popup-custom {
-  max-width: 500px !important;
+  max-width: 450px !important;
   padding: 2rem 2.5rem !important;
   border-radius: 20px !important;
   background: linear-gradient(135deg, #f0f4f8, #ffffff) !important;
@@ -188,34 +199,63 @@ h2 {
 
 @media (max-width: 768px) {
   .modal-popup-custom {
-    width: 90%; /* Reduce el tamaño del modal en pantallas más pequeñas */
-    padding: 20px;
+    width: 90%; 
+    padding: 25px;
   }
 
   .modal-header h5 {
-    font-size: 18px; /* Reduce el tamaño del título en dispositivos pequeños */
+    font-size: 18px; 
   }
 
   .modal-footer {
-    flex-direction: column; /* Los botones se apilan en pantallas pequeñas */
+    flex-direction: column; 
     gap: 10px;
   }
 
   .modal-btn-confirm, .modal-btn-cancel {
-    width: 100%; /* Los botones ocupan el 100% de ancho en pantallas pequeñas */
+    width: 100%; 
   }
 
   .modal-input {
-    font-size: 14px; /* Texto de los inputs más pequeño */
+    font-size: 14px; 
   }
 }
 
 @media (max-width: 576px) {
   .modal-popup-custom {
-    width: 95%; /* Modal aún más pequeño en dispositivos ultra-pequeños */
+    width: 95%;
   }
 
   .modal-header h5 {
-    font-size: 16px; /* Título aún más pequeño */
+    font-size: 16px; 
   }
+}
+
+
+/* Input búsqueda */
+
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  padding-right: 2.5rem; /* espacio para la X */
+}
+
+.search-clear {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  color: #888;
+  cursor: pointer;
+  user-select: none;
+}
+
+.search-clear:hover {
+  color: #333;
 }

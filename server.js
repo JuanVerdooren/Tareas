@@ -26,11 +26,9 @@ mongoose.connect(process.env.MONGO_URI)
 // Rutas API
 const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
-const adminRoutes = require("./routes/adminRoutes"); 
 
 app.use("/auth", authRoutes);
 app.use("/tasks", taskRoutes);
-app.use("/admin", adminRoutes); 
 
 // Para producción: servir archivos de React
 app.use(express.static(path.join(__dirname, "frontend", "build")));

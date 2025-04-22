@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
-// Obtener tareas (admin ve todas, usuario solo las suyas)
+// Obtener tareas
 router.get("/", authMiddleware, async (req, res) => {
     try {
         const isAdmin = req.user.role === "admin";
@@ -18,32 +18,6 @@ router.get("/", authMiddleware, async (req, res) => {
     }
 });
 
-// Obtener todos los usuarios con sus tareas (solo admin)
-router.get("/admin/all", authMiddleware, async (req, res) => {
-    if (req.user.role !== "admin") {
-        return res.status(403).json({ mensaje: "Acceso denegado. Solo administradores." });
-    }
-
-    try {
-        const usuariosConTareas = await User.find({}).select("username email").lean();
-        const tareas = await Task.find({}).populate("usuario", "username email").lean();
-
-        const resultado = usuariosConTareas.map((usuario) => {
-            const tareasDelUsuario = tareas.filter(
-                (tarea) => tarea.usuario && tarea.usuario._id.toString() === usuario._id.toString()
-            );
-
-            return {
-                ...usuario,
-                tareas: tareasDelUsuario,
-            };
-        });
-
-        res.json(resultado);
-    } catch (error) {
-        res.status(500).json({ mensaje: "Error obteniendo tareas", error });
-    }
-});
 
 // Crear nueva tarea (solo admin puede asignar tareas)
 router.post("/", authMiddleware, async (req, res) => {
@@ -74,7 +48,7 @@ router.post("/", authMiddleware, async (req, res) => {
     }
 });
 
-// Actualizar tarea (admin o dueño de la tarea)
+// Actualizar tarea (admin)
 router.put("/:id", authMiddleware, async (req, res) => {
     try {
         const { id } = req.params;
@@ -111,7 +85,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
     }
 });
 
-// Eliminar tarea (solo dueño o admin)
+// Eliminar tarea (admin)
 router.delete("/:id", authMiddleware, async (req, res) => {
     try {
         const taskId = req.params.id;
@@ -161,7 +135,7 @@ router.patch("/:id", authMiddleware, async (req, res) => {
     }
 });
 
-// Obtener nombre de usuario autenticado (opcional)
+// Obtener nombre de usuario autenticado
 router.get("/auth/user", async (req, res) => {
     try {
         const token = req.headers.authorization?.split(" ")[1];
